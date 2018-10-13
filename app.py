@@ -8,7 +8,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
 async_mode = None
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
+app.config['SECRET_KEY'] = 'secret!yo'
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
