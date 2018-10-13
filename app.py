@@ -14,6 +14,18 @@ socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
+colors = ((1,0,0), (0,1,0), (0,0,1), (1,1,0))
+player1_progress = 0
+player2_progress = 0
+player1_score = 0
+player2_score = 0
+player1 = None
+player2 = None
+
+
+def to_color(color):
+    return 'rgb(' + str(color[0] * 255) + ', ' + str(color[1] * 255) + ', ' + str(color[2] * 255) + ')'
+
 
 def background_thread():
     """Example of how to send server generated events to clients."""
@@ -59,15 +71,31 @@ def disconnect_request():
 @socketio.on('connect', namespace='/test')
 def test_connect():
     global thread
+    global player1
+    global player2
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(target=background_thread)
-    emit('my_response', {'data': 'Connected'})
+        if player1 is None:
+            player1 = request.sid
+            print('client 1 connected')
+        elif player2 is None:
+            player2 = request.sid
+            print('client 2 connected')
+    emit('init', {'color1': to_color(colors[0]), 'color2': to_color(colors[1]), 'color3': to_color(colors[2]), 'color4': to_color(colors[3])})
 
 
 @socketio.on('disconnect', namespace='/test')
 def test_disconnect():
     print('Client disconnected', request.sid)
+    global player1
+    global player2
+    if player1 == request.sid:
+        player1 = None
+        print('client 1 disconnected')
+    elif player2 == request.sid:
+        player2 = None
+        print('client 2 disconnected')
 
 
 if __name__ == '__main__':
