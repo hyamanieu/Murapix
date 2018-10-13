@@ -33,8 +33,8 @@ $(document).ready(function() {
         return {
             x: evt.clientX - rect.left,
             y: evt.clientY - rect.top
-    };
-}
+        };
+    }
 
     // Callback functions
     socket.on('connect', function() {
@@ -44,14 +44,16 @@ $(document).ready(function() {
     socket.on('init', function(msg) {
         console.log('init ')
         console.log(msg)
-        ctx.fillStyle = msg.color1;
-        ctx.fillRect(20, 20, 50, 50);
-        ctx.fillStyle = msg.color2;
-        ctx.fillRect(80, 20, 50, 50);
-        ctx.fillStyle = msg.color3;
-        ctx.fillRect(20, 80, 50, 50);
-        ctx.fillStyle = msg.color4;
-        ctx.fillRect(80, 80, 50, 50);
+        if (msg.player > 0) {
+            ctx.fillStyle = msg.color1;
+            ctx.fillRect(20, 20, 50, 50);
+            ctx.fillStyle = msg.color2;
+            ctx.fillRect(80, 20, 50, 50);
+            ctx.fillStyle = msg.color3;
+            ctx.fillRect(20, 80, 50, 50);
+            ctx.fillStyle = msg.color4;
+            ctx.fillRect(80, 80, 50, 50);
+        }
     });
     
     socket.on('put_color', function(msg) {
@@ -59,21 +61,5 @@ $(document).ready(function() {
         console.log(msg)
         document.body.style.background = msg.color
     });
-
-    // Handlers for the different forms in the page.
-    // These accept data from the user and send it to the server in a
-    // variety of ways
-    $('form#emit').submit(function(event) {
-        socket.emit('my_event', {data: $('#emit_data').val()});
-        return false;
-    });
-    $('form#broadcast').submit(function(event) {
-        socket.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
-        return false;
-    });
-    $('form#disconnect').submit(function(event) {
-        socket.emit('disconnect_request');
-        return false;
-    });
-    
+   
 });

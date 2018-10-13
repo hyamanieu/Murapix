@@ -1,5 +1,6 @@
 from serial import Serial
 import time
+from random import randrange
 
 line1_pixel_count = 144
 line2_pixel_count = 144
@@ -54,6 +55,10 @@ def led_encode():
     
     return compressed_bytes
 
+    
+def test():
+    byte = randrange(255) 
+    
 
 def send():
     port = Serial('COM3', 9600)
@@ -64,15 +69,16 @@ def send():
         print(len(encoded))
         print(encoded)
         values = bytearray(encoded)
+        #print(values)
         port.write(values)
         # attend que des données soit revenues
         while(port.inWaiting() == 0):
             # on attend 0.5 seconde pour que les données arrivent
             time.sleep(0.5)
 
-        #while(port.inWaiting() != 0):
-        #    car = port.read()
-        #    print(car)
+        while(port.inWaiting() != 0):
+            car = port.read()
+            print(car)
 
         port.close()
     else:
