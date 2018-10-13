@@ -6,7 +6,6 @@ body{
 }
 div{
     display: flex;
-    /* Temporaire*/
     width: 100%;
     height: 100%;
     min-height: 100px;
@@ -17,16 +16,6 @@ div{
 #croixGauche, #croixDroite{
     flex-direction: column;
 }
-/*
-#croixGauche .left, #croixDroite .right{
-    flex:1;
-}
-
-/*
-#croixGauche, #croixDroite, .milieu{
-    border: 0px solid black;
-
-}*/
 
 .btn{
     border: 5px outset lightgray;
@@ -39,8 +28,6 @@ div{
     align-items: center;
 }
 
-/*
-#croixGauche .left{
-    justify-content: left;
+.left:active > .btn, .right:active > .btn, .up:active > .btn, .down:active > .btn{
+    border: 5px inset lightgray;
 }
-*/
