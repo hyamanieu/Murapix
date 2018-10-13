@@ -1,0 +1,45 @@
+header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1{
+    text-align: center;
+    margin:0px;
+    font-size: 4em;
+}
+
+canvas{
+    width: 100%;
+    height: 100%;
+    flex:1;
+}
+
+table{
+    width: 100%;
+}
+
+td:first-child{
+    text-align: right;
+}
+
+td{
+    text-align: center;
+}
+
+td:last-child{
+    text-align: left;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: orange;
+    max-height: 100%;
+}
+
+body:nth-child(2){
+    flex: 1;
+}
