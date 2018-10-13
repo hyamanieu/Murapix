@@ -1,8 +1,8 @@
 from serial import Serial
 import time
 
-line1_pixel_count = 108
-line2_pixel_count = 108
+line1_pixel_count = 144
+line2_pixel_count = 144
 line3_pixel_count = 60
 max_score = 7
 block_count = 4
@@ -49,8 +49,8 @@ def led_encode():
     # one byte contain 2 colors, encoded on 4 bits, with the last bit being useless
     compressed_bytes = []
     for i in range(0, len(bytes), 2):
-        compressed_bytes.append((bytes[i][0]) & (bytes[i][1] << 1) & (bytes[i][2] << 2) \
-            & (bytes[i+1][0] << 4) & (bytes[i+1][1] << 5) & (bytes[i+1][2] << 6))
+        compressed_bytes.append((bytes[i][0]) | (bytes[i][1] << 1) | (bytes[i][2] << 2) \
+            | (bytes[i+1][0] << 4) | (bytes[i+1][1] << 5) | (bytes[i+1][2] << 6))
     
     return compressed_bytes
 
@@ -60,7 +60,10 @@ def send():
     print(port.name)
 
     if (port.isOpen()):
-        values = bytearray(led_encode())
+        encoded = led_encode()
+        print(len(encoded))
+        print(encoded)
+        values = bytearray(encoded)
         port.write(values)
         # attend que des données soit revenues
         while(port.inWaiting() == 0):
@@ -74,3 +77,7 @@ def send():
         port.close()
     else:
         print ("Le port n'a pas pu être ouvert !")
+
+        
+if __name__ == '__main__':
+    send()
