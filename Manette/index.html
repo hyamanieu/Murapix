@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="main.css">
+
+</head>
+
+<body>
+    <div>
+        <div id="croixGauche">
+            <div class="up">
+                <div class="btn">/\</div>
+            </div>
+            <div class="milieu">
+                <div class="left" onclick="click_button">
+                    <div class="btn"><</div>
+                </div>
+                <div class="right">
+                    <div class="btn">></div>
+                </div>
+            </div>
+            <div class="down">
+                <div class="btn">\/</div>
+            </div>
+        </div>
+        <div id="croixDroite">
+            <div class="up">
+                <div class="btn">/\</div>
+            </div>
+            <div class="milieu">
+                <div class="left" onclick="">
+                    <div class="btn"><</div>
+                </div>
+                <div class="right">
+                    <div class="btn">></div>
+                </div>
+            </div>
+            <div class="down">
+                <div class="btn">\/</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    function click_button () {
+        document.getElementById("btn").style.border = "5px inset lightgray";
+
+    }
+
+</script>
