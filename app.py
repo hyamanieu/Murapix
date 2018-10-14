@@ -4,17 +4,19 @@ from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 from random import randrange
+#from pixdriver import display, init_serial
 
 # Set this variable to "threading", "eventlet" or "gevent" or None
 async_mode = None
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!yo'
+
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 thread_lock = Lock()
 
-colors = ((1,0,0), (0,1,0), (0,0,1), (1,1,0))
+colors = ((0,0,1), (0,1,0), (1,0,0), (0,1,1))
 player1_progress = 0
 player2_progress = 0
 player1_score = 0
@@ -40,7 +42,11 @@ def background_thread():
                       {'event': 'newgame', 'color':color},
                       namespace='/test')
         socketio.sleep(3)
-
+        
+@app.before_first_request
+def init():
+    pass
+    #init_serial()
 
 @app.route('/')
 def index():
@@ -74,6 +80,7 @@ def color_picked(message):
         player1_progress = 0
         player2_progress = 0
 
+    refresh_display()
     #emit('put_color', {'color': message['color']},
     #     broadcast=True)
 
@@ -117,7 +124,13 @@ def test_disconnect():
     elif player2 == request.sid:
         player2 = None
         print('client 2 disconnected')
-
+    
+    
+def refresh_display():
+    #display(colors, player1_progress, player2_progress, player1_score, player2_score)
+    pass
+    
 
 if __name__ == '__main__':
+    #refresh_display()
     socketio.run(app, debug=True, host= '0.0.0.0', port=80)

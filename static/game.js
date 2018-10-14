@@ -23,9 +23,11 @@ $(document).ready(function() {
         var y = mousePos.y;
         var pixel = ctx.getImageData(x, y, 1, 1);
         var data = pixel.data;
-        var rgba = 'rgb(' + data[0] + ', ' + data[1] + ', ' + data[2] + ')';
-        socket.emit('color_pick', {color: rgba})
-        console.log('x:' + x + ' y:' + y + ' color:' + rgba);
+        if (data[0] != 0 || data[1] != 0 || data[2] != 0) {
+            var rgba = 'rgb(' + data[0] + ', ' + data[1] + ', ' + data[2] + ')';
+            socket.emit('color_pick', {color: rgba})
+            console.log('x:' + x + ' y:' + y + ' color:' + rgba);
+        }
     }, false);
     
     function getMousePos(canvas, evt) {
